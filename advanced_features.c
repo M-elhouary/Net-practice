@@ -231,14 +231,16 @@ void split_network(const char *cidr_str, int num_subnets)
         return;
     }
     
+    // Format new prefix string
+    char prefix_str[5];  // enough for "/32" + null terminator
+    snprintf(prefix_str, sizeof(prefix_str), "/%d", new_prefix);
+    
     printf("📊 Splitting Analysis:\n");
     printf("┌─────────────────────────────────────────────────────────┐\n");
     printf("│ Original Network:  %-36s │\n", cidr_str);
     printf("│ Requested Subnets: %-36d │\n", num_subnets);
     printf("│ Required Bits:     %-36d │\n", subnet_bits);
-    printf("│ New Prefix:        %-36s │\n", 
-           (new_prefix < 10) ? ("/" + new_prefix + 48) : 
-           (new_prefix < 32) ? "/XX" : "/32");
+    printf("│ New Prefix:        %-36s │\n", prefix_str);
     printf("└─────────────────────────────────────────────────────────┘\n");
     
     // Calculate original network details
@@ -255,10 +257,7 @@ void split_network(const char *cidr_str, int num_subnets)
     
     // Calculate subnet size
     int host_bits = 32 - new_prefix;
-    int subnet_size = 1;
-    for (int i = 0; i < host_bits; i++) {
-        subnet_size *= 2;
-    }
+    int subnet_size = 1 << host_bits;  // 2^host_bits
     int usable_ips = (host_bits > 1) ? subnet_size - 2 : subnet_size;
     
     printf("\n📈 Subnet Details:\n");
@@ -272,7 +271,7 @@ void split_network(const char *cidr_str, int num_subnets)
     
     printf("\n🎯 Generated Subnets:\n");
     
-    // Generate and display all subnets
+    // Calculate network address (masked)
     unsigned int network_addr = calculate_network_address(network, mask_to_int(orig_mask_str));
     
     for (int i = 0; i < num_subnets; i++) {
@@ -314,6 +313,7 @@ void split_network(const char *cidr_str, int num_subnets)
     free(new_mask_str);
     printf("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
 }
+
 
 /*
  * ============================================================================

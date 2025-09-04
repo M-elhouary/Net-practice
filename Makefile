@@ -79,7 +79,7 @@ fclean:
 	@echo "✅ Force clean completed!"
 
 # Force rebuild everything
-rebuild: clean all
+re: clean all
 
 # Install (copy to system directory)
 install: $(NAME)

@@ -1,20 +1,3 @@
-/*
- * ============================================================================
- * BASIC NETWORK UTILITIES AND SUBNET MASK ANALYSIS
- * ============================================================================
- * 
- * This file contains fundamental utility functions for network calculations:
- * - Binary conversion utilities
- * - String manipulation helpers
- * - Subnet mask parsing and analysis
- * - IP address classification and loopback detection
- * 
- * These are the core building blocks used by other modules.
- * 
- * Author: Network Tools Development Team
- * ============================================================================
- */
-
 #include "net.h"
 
 /*

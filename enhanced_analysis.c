@@ -183,11 +183,14 @@ void analyze_cidr_network(const char *cidr_str)
         return;
     }
     
+    char prefix_str[5];  // buffer for "/xx"
+    snprintf(prefix_str, sizeof(prefix_str), "/%d", prefix_len);
+
     printf("\n📊 CIDR Network Summary:\n");
     printf("┌─────────────────────────────────────────────────────────┐\n");
     printf("│ Original CIDR:     %-36s │\n", cidr_str);
     printf("│ Network IP:        %-36s │\n", ip_str);
-    printf("│ Prefix Length:     %-36s │\n", prefix_len < 10 ? ("/" + prefix_len + 48) : (prefix_len < 32 ? "/XX" : "/32"));
+    printf("│ Prefix Length:     %-36s │\n", prefix_str);
     printf("│ Subnet Mask:       %-36s │\n", mask_str);
     printf("└─────────────────────────────────────────────────────────┘\n");
     
@@ -198,6 +201,7 @@ void analyze_cidr_network(const char *cidr_str)
     free(mask_str);
     printf("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
 }
+
 
 /*
  * ============================================================================
