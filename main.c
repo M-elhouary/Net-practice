@@ -79,16 +79,26 @@ int main(int argc, char *argv[])
             "  ./net --ipv6 <ipv6_address>         → IPv6 address analysis",
             "  ./net --ipv6-convert <ipv6_address> → IPv6 format converter",
             "",
+            "� CONNECTIVITY & DIAGNOSTICS:",
+            "  ./net --ping <ip> [count] [timeout] → ICMP Echo test (ping)",
+            "  ./net --tcp <ip> <port> [timeout]   → TCP port connectivity",
+            "  ./net --discover <ip> [timeout]     → Service discovery scan",
+            "  ./net --diagnose <ip>               → Comprehensive diagnostics",
+            "",
             "💡 EXAMPLES:",
             "  ./net 255.255.255.0                 → Shows 0.0.0.0/24 range",
             "  ./net 192.168.1.100 255.255.255.0   → Shows 192.168.1.0/24",
             "  ./net --scan 192.168.1.0/24         → Scan network IPs",
-            "  ./net --split 10.0.0.0/16 4         → Split into 4 subnets",
-            "  ./net --ipv6 2001:db8::1            → Analyze IPv6 address",
+            "  ./net --ping 8.8.8.8 4              → Ping Google DNS",
+            "  ./net --tcp 192.168.1.1 22          → Check SSH port",
+            "  ./net --discover 192.168.1.1        → Find open services",
+            "  ./net --diagnose 8.8.8.8            → Full network diagnostics",
             "",
             "✨ FEATURES:",
             "  • Mathematical IP conversion (base-256 system)",
             "  • Educational binary/hex representation",
+            "  • Live connectivity testing (ICMP & TCP)",
+            "  • Service discovery with pedagogical trace",
             "  • Beautiful color output and formatting",
             "  • Comprehensive network analysis",
             "  • IPv6 support with modern features",
@@ -229,6 +239,55 @@ int main(int argc, char *argv[])
         printf("🔄 Starting IPv6 Format Converter...\n");
         printf("Target IPv6: %s\n\n", argv[2]);
         convert_ipv6_formats(argv[2]);
+        return 0;
+    }
+
+    // ========================================================================
+    // MODE 10: TCP CONNECTIVITY CHECK (--tcp flag)
+    // ========================================================================
+    
+    // Check if user wants TCP connectivity test (format: ./net --tcp <ip> <port> [timeout])
+    if (argc >= 4 && strcmp(argv[1], "--tcp") == 0)
+    {
+        int port = atoi(argv[3]);
+        int timeout = (argc == 5) ? atoi(argv[4]) : 5;  // Default 5 second timeout
+        check_tcp_connectivity(argv[2], port, timeout);
+        return 0;
+    }
+
+    // ========================================================================
+    // MODE 11: ICMP PING TEST (--ping flag)
+    // ========================================================================
+    
+    // Check if user wants ICMP ping test (format: ./net --ping <ip> [count] [timeout])
+    if (argc >= 3 && strcmp(argv[1], "--ping") == 0)
+    {
+        int count = (argc >= 4) ? atoi(argv[3]) : 4;     // Default 4 packets
+        int timeout = (argc >= 5) ? atoi(argv[4]) : 5;   // Default 5 second timeout
+        perform_icmp_ping(argv[2], count, timeout);
+        return 0;
+    }
+
+    // ========================================================================
+    // MODE 12: SERVICE DISCOVERY SCAN (--discover flag)
+    // ========================================================================
+    
+    // Check if user wants service discovery (format: ./net --discover <ip> [timeout])
+    if (argc >= 3 && strcmp(argv[1], "--discover") == 0)
+    {
+        int timeout = (argc == 4) ? atoi(argv[3]) : 3;  // Default 3 second timeout
+        scan_services_in_range(argv[2], timeout);
+        return 0;
+    }
+
+    // ========================================================================
+    // MODE 13: COMPREHENSIVE DIAGNOSTICS (--diagnose flag)
+    // ========================================================================
+    
+    // Check if user wants full diagnostics (format: ./net --diagnose <ip>)
+    if (argc == 3 && strcmp(argv[1], "--diagnose") == 0)
+    {
+        generate_diagnostics_report(argv[2]);
         return 0;
     }
 

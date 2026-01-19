@@ -209,4 +209,34 @@ void draw_network_diagram(const char *network, const char *mask, int host_count)
 void display_ip_info_enhanced(const char *label, const char *ip, const char *description);
 void show_calculation_steps(const char *title, const char **steps, int step_count);
 
+// ============================================================================
+// NETWORK DIAGNOSTICS - LIVE CONNECTIVITY & SERVICE DISCOVERY
+// ============================================================================
+
+// TCP connectivity check with three-way handshake analysis
+// Tests if a specific IP:port pair is reachable and responding
+// Shows detailed educational trace of TCP handshake process
+// Input: IP address string, port number (1-65535), timeout in seconds
+// Output: 1 if connected successfully, 0 if connection failed
+int check_tcp_connectivity(const char *ip, int port, int timeout_sec);
+
+// ICMP Echo (Ping) connectivity check with packet structure analysis
+// Sends ICMP Echo Request packets and measures Round-Trip Time (RTT)
+// Shows ICMP packet format and checksum calculation mathematically
+// Input: IP address string, number of packets to send, timeout in seconds
+// Output: 1 if at least one reply received, 0 if all failed
+int perform_icmp_ping(const char *ip, int packet_count, int timeout_sec);
+
+// Service discovery scanner - tests common ports for open services
+// Uses non-blocking sockets to rapidly scan well-known service ports
+// Educational trace shows TCP handshake states and port status classification
+// Input: IP address string, timeout in seconds for each connection
+void scan_services_in_range(const char *ip, int timeout_sec);
+
+// Comprehensive network diagnostics report generator
+// Combines ICMP ping, TCP scanning, and statistics into one report
+// Shows complete health check of target IP with detailed analysis
+// Input: Target IP address string
+void generate_diagnostics_report(const char *ip);
+
 #endif // NET_H

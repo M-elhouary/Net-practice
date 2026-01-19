@@ -15,6 +15,7 @@
 # - enhanced_analysis.c: Advanced features (CIDR, class detection, validation)
 # - advanced_features.c: Network scanning, IPv6 support, subnet splitting
 # - output_formatter.c: Enhanced visual output with colors and formatting
+# - network_diagnostics.c: Live connectivity testing and service discovery
 # 
 # Author: Network Tools Development Team
 # ============================================================================
@@ -35,7 +36,8 @@ SRC = main.c \
       loopback_check.c \
       enhanced_analysis.c \
       advanced_features.c \
-      output_formatter.c
+      output_formatter.c \
+      network_diagnostics.c
 
 # Object files (automatically generated from source files)
 OBJ = $(SRC:.c=.o)
